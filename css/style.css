@@ -1,0 +1,735 @@
+/* Import de la police de caractères */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary-bg: #121212; /* Fond principal Spotify */
+    --secondary-bg: #1a1a1a; /* Fond des sections */
+    --top-header-bg: #070707; /* Fond du header supérieur */
+    --text-color: #fff; /* Couleur du texte principal */
+    --light-text: #b3b3b3; /* Texte secondaire */
+    --highlight-green: #1DB954; /* Vert Spotify */
+    --card-bg: #181818; /* Fond des cartes */
+    --hover-bg: #282828; /* Fond au survol */
+    --border-color: #282828; /* Couleur des bordures */
+
+    /* Couleurs pour les barres de progression */
+    --progress-filled: #ffffff; /* Blanc pour la partie pleine */
+    --progress-empty: #535353;  /* Gris-noir pour la partie vide */
+}
+
+/* Réinitialisation de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden; /* Empêche le défilement horizontal non désiré */
+    /* Transition pour le flou du body */
+    transition: filter 0.3s ease-in-out;
+}
+
+body.blur-active {
+    filter: blur(5px); /* Applique un flou au body entier */
+}
+
+/* --- En-tête supérieur (Header) --- */
+.top-header {
+    width: 100%;
+    height: 80px; /* Hauteur fixe */
+    background-color: var(--top-header-bg);
+    flex-shrink: 0; /* Empêche le header de rétrécir */
+}
+
+/* --- Contenu principal --- */
+.main-content {
+    flex-grow: 1; /* Prend l'espace disponible */
+    background: linear-gradient(to bottom, #303030, var(--primary-bg) 300px); /* Dégradé de fond */
+    padding: 20px 30px;
+    overflow-y: auto; /* Permet le défilement vertical si le contenu dépasse */
+    position: relative;
+    padding-bottom: 120px; /* Espace pour le pied de page (lecteur) */
+}
+
+.music-section {
+    margin-bottom: 40px;
+}
+
+.music-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Grille adaptative */
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card:hover {
+    background-color: var(--hover-bg);
+    transform: translateY(-5px); /* Effet de léger soulèvement au survol */
+}
+
+.card img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Ombre pour les pochettes */
+}
+
+.card h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: var(--text-color);
+    white-space: nowrap; /* Empêche le retour à la ligne */
+    overflow: hidden; /* Masque le texte qui dépasse */
+    text-overflow: ellipsis; /* Ajoute des points de suspension si le texte dépasse */
+}
+
+.card p {
+    font-size: 13px;
+    color: var(--light-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Barre de lecture (Pied de page) --- */
+.player-bar {
+    height: 90px;
+    background-color: var(--secondary-bg);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    flex-shrink: 0;
+    width: 100%;
+    position: fixed; /* Fixe la barre en bas de l'écran */
+    bottom: 0;
+    left: 0;
+    z-index: 30; /* Assure que la barre est au-dessus du contenu */
+}
+
+.player-bar .song-info {
+    display: flex;
+    align-items: center;
+    min-width: 180px;
+    flex: 1;
+}
+
+.player-bar .song-info .current-song-cover {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    margin-right: 15px;
+}
+
+.player-bar .song-info .details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.player-bar .song-info .details .current-song-title {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-bar .song-info .details .current-song-artist {
+    font-size: 12px;
+    color: var(--light-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-bar .player-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 2; /* Prend plus d'espace */
+    max-width: 720px;
+}
+
+.player-bar .player-controls .control-buttons-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.player-bar .player-controls button {
+    background: none;
+    border: none;
+    color: var(--light-text);
+    font-size: 20px;
+    margin: 0 8px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 5px;
+}
+
+.player-bar .player-controls button:hover {
+    color: var(--text-color);
+}
+
+.player-bar .player-controls button.active {
+    color: var(--highlight-green); /* Couleur active pour shuffle/repeat */
+}
+
+/* --- Style spécifique du bouton Play/Pause pour éviter le redimensionnement --- */
+.player-bar .player-controls .play-pause-btn {
+    font-size: 32px;
+    color: var(--text-color);
+    width: 48px; /* Largeur fixe */
+    height: 48px; /* Hauteur fixe */
+    display: flex; /* Utilise flexbox pour centrer l'icône */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    border-radius: 50%; /* Rend le bouton rond */
+}
+.player-bar .player-controls .play-pause-btn:hover {
+    color: var(--highlight-green);
+    transform: scale(1.1); /* Petit effet de zoom au survol */
+}
+
+.player-bar .player-controls .progress-bar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 12px;
+    color: var(--light-text);
+}
+
+/* --- Styles des barres de progression (audio et volume) --- */
+.player-bar .player-controls .progress-bar,
+.player-bar .volume-controls .volume-slider,
+/* Ajout pour les contrôles en plein écran */
+.fullscreen-player-controls .progress-bar,
+.fullscreen-player-controls .volume-slider {
+    width: 100%; /* La barre de progression audio prend toute la largeur disponible */
+    height: 4px;
+    background-color: transparent; /* Rend le fond par défaut transparent */
+    border-radius: 2px;
+    margin: 0 10px;
+    cursor: pointer;
+    -webkit-appearance: none; /* Cache l'apparence par défaut sur WebKit */
+    appearance: none; /* Cache l'apparence par défaut */
+    outline: none; /* Supprime l'outline au focus */
+}
+
+/* Style de la piste pour WebKit (Chrome, Safari, Edge) */
+.player-bar .player-controls .progress-bar::-webkit-slider-runnable-track,
+.player-bar .volume-controls .volume-slider::-webkit-slider-runnable-track,
+.fullscreen-player-controls .progress-bar::-webkit-slider-runnable-track,
+.fullscreen-player-controls .volume-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right,
+        var(--progress-filled) var(--webkit-slider-progress, 0%),
+        var(--progress-empty) var(--webkit-slider-progress, 0%)
+    );
+    border-radius: 2px;
+}
+
+/* Style du pouce (le petit cercle) pour WebKit */
+.player-bar .player-controls .progress-bar::-webkit-slider-thumb,
+.player-bar .volume-controls .volume-slider::-webkit-slider-thumb,
+.fullscreen-player-controls .progress-bar::-webkit-slider-thumb,
+.fullscreen-player-controls .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color: var(--progress-filled); /* Le pouce est blanc */
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -4px; /* Centre le pouce verticalement sur la piste */
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    opacity: 0; /* Caché par défaut */
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+/* Afficher le pouce au survol/focus pour WebKit */
+.player-bar .player-controls .progress-bar:hover::-webkit-slider-thumb,
+.player-bar .player-controls .progress-bar:focus::-webkit-slider-thumb,
+.player-bar .volume-controls .volume-slider:hover::-webkit-slider-thumb,
+.player-bar .volume-controls .volume-slider:focus::-webkit-slider-thumb,
+.fullscreen-player-controls .progress-bar:hover::-webkit-slider-thumb,
+.fullscreen-player-controls .progress-bar:focus::-webkit-slider-thumb,
+.fullscreen-player-controls .volume-slider:hover::-webkit-slider-thumb,
+.fullscreen-player-controls .volume-slider:focus::-webkit-slider-thumb {
+    opacity: 1;
+}
+
+/* Style de la piste pour Firefox */
+.player-bar .player-controls .progress-bar::-moz-range-track,
+.player-bar .volume-controls .volume-slider::-moz-range-track,
+.fullscreen-player-controls .progress-bar::-moz-range-track,
+.fullscreen-player-controls .volume-slider::-moz-range-track {
+    width: 100%;
+    height: 4px;
+    background: var(--progress-empty); /* Fond gris-noir pour la piste entière */
+    border-radius: 2px;
+}
+
+/* Style du pouce pour Firefox */
+.player-bar .player-controls .progress-bar::-moz-range-thumb,
+.player-bar .volume-controls .volume-slider::-moz-range-thumb,
+.fullscreen-player-controls .progress-bar::-moz-range-thumb,
+.fullscreen-player-controls .volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background-color: var(--progress-filled); /* Le pouce est blanc */
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+/* Correction Firefox : pour que la partie avant le pouce soit remplie */
+.player-bar .player-controls .progress-bar::-moz-range-progress,
+.player-bar .volume-controls .volume-slider::-moz-range-progress,
+.fullscreen-player-controls .progress-bar::-moz-range-progress,
+.fullscreen-player-controls .volume-slider::-moz-range-progress {
+    background: var(--progress-filled); /* Utilise la couleur de remplissage */
+    border-radius: 2px;
+    height: 4px;
+}
+
+/* Spécifique à la largeur du slider de volume */
+.player-bar .volume-controls .volume-slider {
+    width: 90px;
+    margin: 0 8px;
+}
+
+/* Contrôles du volume */
+.player-bar .volume-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 120px;
+    flex: 1;
+}
+
+.player-bar .volume-controls button {
+    background: none;
+    border: none;
+    color: var(--light-text);
+    font-size: 18px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 5px;
+}
+
+.player-bar .volume-controls button:hover {
+    color: var(--text-color);
+}
+
+/* --- Modal pour l'affichage de la pochette d'album en plein écran --- */
+.fullscreen-modal {
+    display: none; /* Cache la modal par défaut au chargement */
+    position: fixed; /* Reste en place */
+    z-index: 100; /* Se place au-dessus de tout le reste */
+    left: 0;
+    top: 0;
+    width: 100%; /* Pleine largeur */
+    height: 100%; /* Pleine hauteur */
+    overflow: hidden; /* Cache le débordement */
+    background-color: rgba(0,0,0,0.9); /* Fond noir semi-transparent */
+    opacity: 0; /* Pour la transition */
+    visibility: hidden; /* Pour la transition */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Transition douce */
+
+    /* Nouveau : Disposition principale pour la modal */
+    display: flex; /* Utilise flexbox par default */
+    flex-direction: column; /* Organise le contenu principal et les contrôles en colonne */
+    justify-content: space-between; /* Espace entre le contenu principal et les contrôles */
+    align-items: center; /* Centre horizontalement */
+    padding-bottom: 90px; /* Espace pour les contrôles du bas */
+}
+
+.fullscreen-modal.active {
+    display: flex; /* Affiche la modal quand la classe 'active' est ajoutée */
+    opacity: 1;
+    visibility: visible;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 101; /* S'assure qu'il est au-dessus de l'image de la modal */
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Conteneur principal pour la pochette et les infos/paroles */
+.fullscreen-main-content {
+    display: flex;
+    flex-direction: row; /* Pochette à gauche, infos à droite */
+    width: 100%;
+    max-width: 1200px; /* Largeur max pour le contenu principal */
+    flex-grow: 1; /* Permet de prendre l'espace disponible */
+    align-items: center; /* Centre verticalement les deux colonnes */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Zone de la pochette */
+.fullscreen-cover-area {
+    flex: 0 0 30%; /* Prend 30% de la largeur, ne rétrécit pas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* S'adapte à la hauteur du conteneur parent */
+    padding-right: 30px; /* Espace entre pochette et infos */
+}
+
+.fullscreen-cover-area img {
+    max-width: 100%;
+    max-height: 80vh; /* Permet à la pochette d'être grande verticalement */
+    height: auto;
+    width: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    object-fit: contain;
+}
+
+/* Zone des détails (infos + paroles) */
+.fullscreen-details-area {
+    flex: 1; /* Prend le reste de l'espace (les 70%) */
+    display: flex;
+    flex-direction: column; /* Titre/Artiste en haut, paroles en bas */
+    justify-content: center; /* Centre verticalement le contenu */
+    padding-left: 30px; /* Espace entre pochette et infos */
+    height: 100%;
+    overflow-y: auto; /* Permet le défilement des paroles si elles sont longues */
+}
+
+.fullscreen-song-info {
+    margin-bottom: 20px; /* Espace entre les infos et les paroles */
+    text-align: left;
+}
+
+.fullscreen-song-info .current-song-title {
+    font-size: 3.5em; /* Très grande taille */
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1.2;
+}
+
+.fullscreen-song-info .current-song-artist {
+    font-size: 1.8em; /* Plus petite que le titre */
+    color: var(--light-text);
+    margin-top: 5px;
+}
+
+.fullscreen-lyrics {
+    font-size: 1.2em; /* Taille plus petite que titre/artiste */
+    color: var(--light-text);
+    line-height: 1.6;
+    max-height: calc(100% - 150px); /* Ajuster la hauteur pour laisser de la place au titre/artiste */
+    overflow-y: auto; /* Scroll si les paroles sont longues */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.fullscreen-lyrics::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+
+/* --- Contrôles du lecteur en mode plein écran (section dédiée) --- */
+.fullscreen-player-controls {
+    display: flex;
+    flex-direction: column; /* Boutons, puis barre de progression, puis volume */
+    align-items: center; /* Centre tout horizontalement */
+    width: 90%; /* Largeur de la barre de contrôle */
+    max-width: 800px; /* Limite la largeur */
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-top: 20px; /* Espace au-dessus des contrôles */
+}
+
+.fullscreen-player-controls .player-controls-row {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Plus d'espace entre les boutons */
+    margin-bottom: 15px;
+}
+
+.fullscreen-player-controls button {
+    background: none;
+    border: none;
+    color: var(--light-text);
+    font-size: 28px; /* Icônes plus grandes */
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    padding: 8px;
+}
+
+.fullscreen-player-controls button:hover {
+    color: var(--text-color);
+    transform: translateY(-2px);
+}
+
+.fullscreen-player-controls .play-pause-btn {
+    font-size: 48px; /* Encore plus grand */
+    width: 70px;
+    height: 70px;
+    border: 2px solid var(--text-color); /* Ajout d'une bordure */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    transition: all 0.2s ease;
+}
+.fullscreen-player-controls .play-pause-btn:hover {
+    color: var(--highlight-green);
+    border-color: var(--highlight-green);
+    transform: scale(1.05);
+}
+
+.fullscreen-player-controls .progress-bar-container {
+    width: 90%; /* La barre de progression est plus large */
+    margin-bottom: 15px;
+}
+
+.fullscreen-player-controls .progress-bar {
+    flex-grow: 1; /* Prend l'espace disponible */
+}
+
+.fullscreen-player-controls .current-time,
+.fullscreen-player-controls .duration {
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.fullscreen-player-controls .volume-controls-row {
+    display: flex;
+    align-items: center;
+    width: 80%; /* Ajuste la largeur des contrôles de volume */
+    justify-content: center;
+}
+
+.fullscreen-player-controls .volume-slider {
+    width: 150px;
+}
+.fullscreen-player-controls .volume-mute-btn {
+    font-size: 20px; /* Plus petit que les autres boutons de contrôle */
+}
+
+
+/* --- Media Queries (pour la réactivité) --- */
+
+/* Pour les écrans plus petits que 1024px (ex: tablettes en mode paysage) */
+@media (max-width: 1024px) {
+    /* Styles pour le footer (inchangés) */
+
+    /* Ajustements pour les contrôles en plein écran sur tablettes */
+    .fullscreen-main-content {
+        flex-direction: column; /* Pochette au-dessus des infos/paroles */
+        padding: 10px;
+    }
+
+    .fullscreen-cover-area {
+        flex: none; /* Ne prend plus 30% en largeur */
+        height: auto; /* Hauteur auto pour s'adapter à la pochette */
+        width: 70%; /* Pochette prend plus de largeur */
+        max-width: 400px; /* Limite la largeur max de la pochette */
+        padding-right: 0;
+        margin-bottom: 20px; /* Espace sous la pochette */
+    }
+
+    .fullscreen-cover-area img {
+        max-height: 50vh; /* Ajuste la hauteur max de l'image */
+    }
+
+    .fullscreen-details-area {
+        flex: 1;
+        width: 100%; /* Prend toute la largeur disponible */
+        padding-left: 0;
+        text-align: center; /* Centre le texte */
+        height: auto; /* Hauteur s'adapte au contenu */
+    }
+    .fullscreen-song-info {
+        text-align: center; /* Centre le texte */
+    }
+    .fullscreen-song-info .current-song-title {
+        font-size: 2.5em;
+    }
+    .fullscreen-song-info .current-song-artist {
+        font-size: 1.4em;
+    }
+    .fullscreen-lyrics {
+        font-size: 1em;
+        max-height: 200px; /* Limite la hauteur des paroles sur tablette */
+    }
+
+    .fullscreen-player-controls {
+        width: 95%; /* Prend plus de largeur */
+        margin-top: 10px;
+        padding: 10px 15px;
+    }
+    .fullscreen-player-controls .player-controls-row {
+        gap: 15px;
+    }
+    .fullscreen-player-controls button {
+        font-size: 24px;
+    }
+    .fullscreen-player-controls .play-pause-btn {
+        font-size: 40px;
+        width: 60px;
+        height: 60px;
+    }
+}
+
+/* Pour les écrans plus petits que 768px (smartphones en mode paysage, etc.) */
+@media (max-width: 768px) {
+    /* Styles pour le footer (inchangés) */
+
+    .fullscreen-modal {
+        padding-bottom: 70px; /* Moins d'espace pour les contrôles du bas */
+    }
+
+    .fullscreen-main-content {
+        padding: 10px;
+    }
+
+    .fullscreen-cover-area {
+        width: 80%; /* Pochette plus large */
+        max-width: 300px;
+    }
+
+    .fullscreen-details-area {
+        margin-top: 15px;
+    }
+
+    .fullscreen-song-info .current-song-title {
+        font-size: 2em;
+    }
+    .fullscreen-song-info .current-song-artist {
+        font-size: 1.2em;
+    }
+    .fullscreen-lyrics {
+        font-size: 0.9em;
+        max-height: 150px; /* Encore moins de hauteur pour les paroles */
+    }
+
+    .fullscreen-player-controls {
+        width: 98%;
+        padding: 8px 10px;
+    }
+    .fullscreen-player-controls .player-controls-row {
+        gap: 10px;
+    }
+    .fullscreen-player-controls button {
+        font-size: 20px;
+    }
+    .fullscreen-player-controls .play-pause-btn {
+        font-size: 36px;
+        width: 52px;
+        height: 52px;
+    }
+    .fullscreen-player-controls .volume-slider {
+        width: 100px;
+    }
+}
+
+/* Pour les écrans plus petits que 480px (la plupart des smartphones) */
+@media (max-width: 480px) {
+    /* Styles pour le footer (inchangés) */
+
+    .fullscreen-modal {
+        padding-bottom: 60px; /* Moins d'espace */
+    }
+
+    .fullscreen-main-content {
+        flex-direction: column; /* Pochette au-dessus des infos */
+        justify-content: flex-start; /* Aligne le contenu en haut */
+        padding: 5px;
+    }
+
+    .fullscreen-cover-area {
+        width: 90%;
+        max-width: 250px;
+        margin-bottom: 10px;
+    }
+
+    .fullscreen-cover-area img {
+        max-height: 40vh;
+    }
+
+    .fullscreen-details-area {
+        margin-top: 10px;
+    }
+    .fullscreen-song-info .current-song-title {
+        font-size: 1.8em;
+    }
+    .fullscreen-song-info .current-song-artist {
+        font-size: 1em;
+    }
+    .fullscreen-lyrics {
+        font-size: 0.8em;
+        max-height: 100px;
+    }
+
+    .fullscreen-player-controls {
+        width: 100%;
+        padding: 5px;
+        border-radius: 0; /* Pas de bords arrondis sur mobile */
+    }
+    .fullscreen-player-controls .player-controls-row {
+        gap: 8px;
+    }
+    .fullscreen-player-controls button {
+        font-size: 18px;
+    }
+    .fullscreen-player-controls .play-pause-btn {
+        font-size: 32px;
+        width: 48px;
+        height: 48px;
+    }
+    .fullscreen-player-controls .progress-bar-container {
+        width: 95%;
+    }
+    .fullscreen-player-controls .volume-slider {
+        width: 80px;
+    }
+}
