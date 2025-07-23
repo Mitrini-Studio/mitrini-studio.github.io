@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitriiini Music</title>
+    <link rel="icon" href="images/mitriiini.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="top-header">
+        </div>
+
+    <div class="main-content">
+        <section class="music-section">
+            <h2>Mes Morceaux Préférés</h2>
+            <div class="cards-container">
+                <div class="card" data-track-index="0">
+                    <img src="images/cover-amoureuse.jpg" alt="Amoureuse Cover">
+                    <h3>Amoureuse</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="1">
+                    <img src="images/cover-cetait-pas-a-cause-de-toi.jpg" alt="C'était pas à cause de toi Cover">
+                    <h3>C'était pas à cause de toi</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="2">
+                    <img src="images/cover-cigarete.jpg" alt="Cigarette Cover">
+                    <h3>Cigarette</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="3">
+                    <img src="images/cover-jespere-que-cest-vrai.jpg" alt="J'espère que c'est vrai Cover">
+                    <h3>J'espère que c'est vrai</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="4">
+                    <img src="images/cover-le-reste-de-mon-passe.jpg" alt="Le reste de mon passé Cover">
+                    <h3>Le reste de mon passé</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="5">
+                    <img src="images/cover-meme-le-monde-reve-damour.jpg" alt="Même le monde rêve d'amour Cover">
+                    <h3>Même le monde rêve d'amour</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="6">
+                    <img src="images/cover-sourire.jpg" alt="Sourire Cover">
+                    <h3>Sourire</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="7">
+                    <img src="images/cover-sur-le-coeur.jpg" alt="Sur le cœur Cover">
+                    <h3>Sur le cœur</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="8">
+                    <img src="images/cover-toxic-boy.jpg" alt="Toxic Boy Cover">
+                    <h3>Toxic Boy</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="9">
+                    <img src="images/cover-une-ombre.jpg" alt="Une ombre Cover">
+                    <h3>Une ombre</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="10">
+                    <img src="images/cover-vampire.jpg" alt="Vampire Cover">
+                    <h3>Vampire</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+                <div class="card" data-track-index="11">
+                    <img src="images/cover-wouna.jpg" alt="Wouna Cover">
+                    <h3>Wouna</h3>
+                    <p>Tsew The Kid</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="fullscreenCoverModal" class="fullscreen-modal">
+        <span class="close-modal">&times;</span>
+        <div class="fullscreen-main-content">
+            <div class="fullscreen-cover-area">
+                <img id="fullscreenCoverImage" src="" alt="Pochette en plein écran">
+            </div>
+            <div class="fullscreen-details-area">
+                <div class="fullscreen-song-info">
+                    <div id="fullscreenSongTitle" class="current-song-title"></div>
+                    <div id="fullscreenSongArtist" class="current-song-artist"></div>
+                </div>
+                <div id="fullscreenLyrics" class="fullscreen-lyrics">
+                    </div>
+            </div>
+        </div>
+
+        <div class="fullscreen-player-controls">
+            <div class="player-controls-row">
+                <button class="shuffle-btn"><i class="fas fa-random"></i></button>
+                <button class="prev-btn"><i class="fas fa-backward"></i></button>
+                <button class="play-pause-btn"><i class="fas fa-play"></i></button>
+                <button class="next-btn"><i class="fas fa-forward"></i></button>
+                <button class="repeat-btn"><i class="fas fa-redo"></i></button>
+            </div>
+            <div class="progress-bar-container">
+                <span class="current-time">0:00</span>
+                <input type="range" id="fullscreenProgressBar" class="progress-bar" value="0" step="0.01">
+                <span class="duration">0:00</span>
+            </div>
+            <div class="volume-controls-row">
+                <button class="volume-mute-btn"><i class="fas fa-volume-up"></i></button>
+                <input type="range" id="fullscreenVolumeSlider" class="volume-slider" value="100" step="1">
+            </div>
+        </div>
+    </div>
+
+    <div class="player-bar">
+        <div class="song-info">
+            <img src="" alt="Pochette de la chanson actuelle" class="current-song-cover">
+            <div class="details">
+                <div class="current-song-title">Choisissez une chanson</div>
+                <div class="current-song-artist"></div>
+            </div>
+        </div>
+        <div class="player-controls">
+            <div class="control-buttons-row">
+                <button class="shuffle-btn"><i class="fas fa-random"></i></button>
+                <button class="prev-btn"><i class="fas fa-backward"></i></button>
+                <button class="play-pause-btn"><i class="fas fa-play"></i></button>
+                <button class="next-btn"><i class="fas fa-forward"></i></button>
+                <button class="repeat-btn"><i class="fas fa-redo"></i></button>
+            </div>
+            <div class="progress-bar-container">
+                <span class="current-time">0:00</span>
+                <input type="range" id="progressBar" class="progress-bar" value="0" step="0.01">
+                <span class="duration">0:00</span>
+            </div>
+        </div>
+        <div class="volume-controls">
+            <button class="volume-mute-btn"><i class="fas fa-volume-up"></i></button>
+            <input type="range" id="volumeSlider" class="volume-slider" value="100" step="1">
+            <button class="fullscreen-btn"><i class="fas fa-expand-alt"></i></button>
+        </div>
+    </div>
+
+    <audio id="audioPlayer"></audio>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
