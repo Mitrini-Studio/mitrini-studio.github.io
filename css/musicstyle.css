@@ -1,0 +1,121 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212; /* Spotify-like dark background */
+    color: #fff;
+    display: flex; /* Utilisation de flexbox pour le layout */
+    flex-direction: column; /* Organise les éléments en colonne */
+    min-height: 100vh; /* La hauteur minimale est de 100% de la hauteur de la fenêtre */
+}
+
+header {
+    background-color: #000;
+    padding: 20px;
+    height: 60px; /* Example height */
+}
+
+main {
+    /* SUPPRIMÉ: padding: 20px; pour permettre à l'image de fond d'être pleine page */
+    max-width: 1200px; /* Conservez la largeur maximale pour le contenu */
+    margin: 20px auto; /* Centre le contenu principal */
+    flex-grow: 1; /* Permet à la main de prendre l'espace disponible */
+    width: 100%; /* Assure que main prend toute la largeur disponible de son parent */
+    position: relative; /* Nécessaire pour le positionnement de l'arrière-plan */
+    overflow: hidden; /* Cache le débordement de l'image de fond floue */
+}
+
+/* Pseudo-élément pour l'arrière-plan flou */
+main::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: var(--background-image-url, url('../images/animation.gif'));
+    filter: blur(10px); /* Flou par défaut */
+    opacity: 1; /* Visible par défaut */
+    /* MODIFIÉ: Transition pour un fade d'opacité et le changement d'image de fond */
+    transition: opacity 0.5s ease-in-out, background-image 0s; /* 'background-image 0s' pour changer l'image instantanément */
+    z-index: -1; /* Place l'arrière-plan derrière le contenu */
+}
+
+/* Nouveau pseudo-élément pour la transition de fade */
+main::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: var(--next-background-image-url, none); /* Nouvelle variable pour la prochaine image */
+    filter: blur(10px);
+    opacity: 0; /* Initialement invisible */
+    transition: opacity 0.5s ease-in-out; /* Transition de fade pour la nouvelle image */
+    z-index: -2; /* Derrière le ::before initialement */
+}
+
+
+/* Styles pour le contenu de la main, pour qu'il soit au-dessus de l'arrière-plan flou */
+main h1,
+main .artists-grid {
+    position: relative;
+    z-index: 1;
+    /* AJOUTÉ: Padding pour le contenu afin qu'il ne soit pas collé aux bords */
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.artists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.artist-item {
+    background-color: #181818;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* Remove underline for links */
+    color: inherit; /* Inherit text color */
+}
+
+.artist-item:hover {
+    background-color: #282828;
+}
+
+.artist-item img {
+    width: 100px; /* Adjust size as needed */
+    height: 100px; /* Ensure equal height for perfect circle */
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    margin-bottom: 10px;
+}
+
+.artist-item p {
+    margin: 0;
+    font-weight: bold;
+    color: #b3b3b3; /* Lighter color for artist name */
+}
+
+footer {
+    background-color: #000;
+    padding: 20px;
+    text-align: center;
+    height: 60px; /* Example height */
+}
